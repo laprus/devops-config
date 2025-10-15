@@ -33,7 +33,7 @@ spec:
           helm:
             - valueFiles:
                 - values.yaml
-                - https://raw.githubusercontent.com/laprus/devops-config/HEAD/environments/{{env}}/kargo-values.yaml
+                - https://raw.githubusercontent.com/laprus/devops-config/HEAD/environments/{{env}}/values.yaml
 
       destination:
         server: https://kubernetes.default.svc
