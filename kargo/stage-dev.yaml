@@ -32,10 +32,3 @@ spec:
         - uses: git-push
           config:
             path: ./repo
-        - uses: argocd-update
-          config:
-            apps:
-              - name: devops-app-dev
-                sources:
-                - repoURL: "https://github.com/laprus/devops-config"
-              
