@@ -1,3 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-dev
+spec: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-staging
+spec: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-prod
+spec: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-kargo
+spec: {}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:

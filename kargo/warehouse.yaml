@@ -1,0 +1,11 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  name: devops-app-ghcr
+  namespace: kargo-project
+spec:
+  subscriptions:
+    - image:
+        repoURL: ghcr.io/laprus/devops/devops-app
+        semverConstraint: ">=0.0.0" # Accept all SemVer
+        insecureSkipTLSVerify: true
