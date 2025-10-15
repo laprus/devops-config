@@ -2,10 +2,13 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Warehouse
 metadata:
   name: devops-app-ghcr
-  namespace: kargo-project
+  namespace: devops-kargo
 spec:
+  freightCreationPolicy: Automatic
+  interval: 5m0s
   subscriptions:
     - image:
+        discoveryLimit: 20
+        imageSelectionStrategy: SemVer
         repoURL: ghcr.io/laprus/devops/devops-app
-        semverConstraint: ">=0.0.0" # Accept all SemVer
-        insecureSkipTLSVerify: true
+        strictSemvers: true

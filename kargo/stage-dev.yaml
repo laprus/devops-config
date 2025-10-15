@@ -1,0 +1,39 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: dev
+  namespace: devops-kargo
+spec:
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: devops-app-ghcr
+    sources:
+      direct: true
+  promotionTemplate:
+    spec:
+      steps:
+        - uses: git-clone
+          config:
+            repoURL: https://github.com/laprus/devops-config
+            checkout:
+              - branch: main
+                path: ./repo
+        - uses: yaml-update
+          config:
+            path: ./repo/environments/dev/values.yaml
+            updates:
+              - key: image.tag
+                value: ${{ imageFrom("devops-app-ghcr").Tag }}
+        - uses: git-commit
+          config:
+            path: ./repo
+        - uses: git-push
+          config:
+            path: ./repo
+            targetBranch: main
+        - uses: argocd-update
+          config:
+            apps:
+              - name: devops-app-dev
+                namespace: argocd
