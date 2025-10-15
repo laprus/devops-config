@@ -34,18 +34,18 @@ spec:
       # 2. SOURCE - devops-config
         - repoURL: https://github.com/laprus/devops-config.git
           targetRevision: HEAD
-          path: '{{.path}}' # path to values.yaml (e.g. environments/dev)
+          path: '{{path}}' # path to values.yaml (e.g. environments/dev)
           # pass path to values.yaml
           helm:
             valueFiles:
-              - '$all/{{.path}}/values.yaml'
+              - '$all/{{path}}/values.yaml'
             parameters:
               - name: 'helm.source.repoURL'
                 value: 'https://github.com/laprus/devops.git'
 
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{.namespace}}'
+        namespace: '{{namespace}}'
       
       syncPolicy:
         automated:
