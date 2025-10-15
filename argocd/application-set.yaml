@@ -31,9 +31,9 @@ spec:
           path: deployments/helm/devops-app
           ref: chart-source
           helm:
-            - valueFiles:
-                - values.yaml
-                - https://raw.githubusercontent.com/laprus/devops-config/HEAD/environments/{{env}}/values.yaml
+            valueFiles:
+              - values.yaml
+              - https://raw.githubusercontent.com/laprus/devops-config/HEAD/environments/{{env}}/values.yaml
 
       destination:
         server: https://kubernetes.default.svc
