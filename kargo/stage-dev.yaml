@@ -28,13 +28,15 @@ spec:
         - uses: git-commit
           config:
             path: ./repo
-            message: "chore: promote devops-app to dev - ${{ imageFrom('ghcr.io/laprus/devops/devops-app').Tag }}"
+            message: "chore: promote devops-app to dev - ${{ imageFrom(\"ghcr.io/laprus/devops/devops-app\").Tag }}"
         - uses: git-push
           config:
             path: ./repo
-            targetBranch: main
         - uses: argocd-update
           config:
             apps:
               - name: devops-app-dev
-                namespace: argocd
+                namespace: devops-dev
+                sources:
+                - repoURL: "https://github.com/laprus/devops-config"
+              
