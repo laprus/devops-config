@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: devops-app-environments
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+            path: environments/dev
+            namespace: devops-dev
+          - env: staging
+            path: environments/staging
+            namespace: devops-staging
+          - env: prod
+            path: environments/prod
+            namespace: devops-prod
+  
+  template:
+    metadata:
+      name: 'devops-app-{{.env}}'
+      labels:
+        kargo.akuity.io/stage: '{{.env}}'
+    spec:
+      project: default
+      sources:
+      # 1. SOURCE - devops (Chart Helm)
+        - repoURL: https://github.com/laprus/devops.git
+          targetRevision: HEAD
+          path: deployments/helm/devops-app
+          ref: chart-source
+      
+      # 2. SOURCE - devops-config
+        - repoURL: https://github.com/laprus/devops-config.git
+          targetRevision: HEAD
+          path: '{{.path}}' # path to values.yaml (e.g. environments/dev)
+          # pass path to values.yaml
+          helm:
+            valueFiles:
+              - '$all/{{.path}}/values.yaml'
+            parameters:
+              - name: 'helm.source.repoURL'
+                value: 'https://github.com/laprus/devops.git'
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{.namespace}}'
+      
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
