@@ -24,7 +24,7 @@ spec:
             path: ./repo/environments/dev/values.yaml
             updates:
               - key: image.tag
-                value: ${{ imageFrom("devops-app-ghcr").Tag }}
+                value: ${{ imageFrom("ghcr.io/laprus/devops/devops-app").Tag }}
         - uses: git-commit
           config:
             path: ./repo
