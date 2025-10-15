@@ -30,14 +30,10 @@ spec:
           targetRevision: HEAD
           path: deployments/helm/devops-app
           ref: chart-source
-      
-      # 2. SOURCE - devops-config
-        - repoURL: https://github.com/laprus/devops-config.git
-          targetRevision: HEAD
-          path: .
           helm:
-            valueFiles:
-              - '$chart-source/{{path}}/values.yaml'
+            - valueFiles:
+                - values.yaml
+                - https://raw.githubusercontent.com/laprus/devops-config/HEAD/environments/{{env}}/kargo-values.yaml
 
       destination:
         server: https://kubernetes.default.svc
