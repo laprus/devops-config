@@ -36,7 +36,6 @@ spec:
           config:
             apps:
               - name: devops-app-dev
-                namespace: devops-dev
                 sources:
                 - repoURL: "https://github.com/laprus/devops-config"
               
