@@ -38,10 +38,7 @@ spec:
           # pass path to values.yaml
           helm:
             valueFiles:
-              - '$all/{{path}}/values.yaml'
-            parameters:
-              - name: 'helm.source.repoURL'
-                value: 'https://github.com/laprus/devops.git'
+              - '$chart-source/{{path}}/values.yaml'
 
       destination:
         server: https://kubernetes.default.svc
