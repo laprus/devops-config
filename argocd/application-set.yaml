@@ -34,6 +34,7 @@ spec:
       # 2. SOURCE - devops-config
         - repoURL: https://github.com/laprus/devops-config.git
           targetRevision: HEAD
+          path: .
           helm:
             valueFiles:
               - '$chart-source/{{path}}/values.yaml'
