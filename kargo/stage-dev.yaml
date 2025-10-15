@@ -28,6 +28,7 @@ spec:
         - uses: git-commit
           config:
             path: ./repo
+            message: "chore: promote devops-app to dev - ${{ imageFrom('ghcr.io/laprus/devops/devops-app').Tag }}"
         - uses: git-push
           config:
             path: ./repo
