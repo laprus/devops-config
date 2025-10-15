@@ -19,9 +19,9 @@ spec:
   
   template:
     metadata:
-      name: 'devops-app-{{.env}}'
+      name: '{{ (printf "devops-app-%s" .env) }}'
       labels:
-        kargo.akuity.io/stage: '{{.env}}'
+        kargo.akuity.io/stage: "{{.env}}"
     spec:
       project: default
       sources:
