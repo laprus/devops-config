@@ -47,7 +47,7 @@ spec:
       labels:
         kargo.akuity.io/stage: "{{env}}"
       annotations:
-        kargo.akuity.io/allowed-stage-namespaces: devops-kargo
+        kargo.akuity.io/authorized-stage: devops-kargo:{{env}}
     spec:
       project: default
       sources:
