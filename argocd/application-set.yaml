@@ -19,7 +19,7 @@ spec:
   
   template:
     metadata:
-      name: '{{ (printf "devops-app-%s" .env) }}'
+      name: devops-app-{{.env}}
       labels:
         kargo.akuity.io/stage: "{{.env}}"
     spec:
