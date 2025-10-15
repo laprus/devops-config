@@ -10,12 +10,12 @@ spec:
           - env: dev
             path: environments/dev
             namespace: devops-dev
-          - env: staging
-            path: environments/staging
-            namespace: devops-staging
-          - env: prod
-            path: environments/prod
-            namespace: devops-prod
+#          - env: staging
+#            path: environments/staging
+#            namespace: devops-staging
+#          - env: prod
+#            path: environments/prod
+#            namespace: devops-prod
   
   template:
     metadata:
