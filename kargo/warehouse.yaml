@@ -8,7 +8,8 @@ spec:
   interval: 5m0s
   subscriptions:
     - image:
-        discoveryLimit: 20
-        imageSelectionStrategy: SemVer
         repoURL: ghcr.io/laprus/devops/devops-app
-        strictSemvers: true
+        imageSelectionStrategy: SemVer
+        discoveryLimit: 20
+        insecureSkipTLSVerify: true
+        strictSemvers: false
