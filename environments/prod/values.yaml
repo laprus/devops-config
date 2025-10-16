@@ -1,5 +1,5 @@
 image:
   repository: ghcr.io/laprus/devops/devops-app
-  tag: 0.3.0 # Kargo will change that!
+  tag: v0.6.0
 
 replicaCount: 1
