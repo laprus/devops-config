@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: spacelift-manager
+spec: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: spacelift-manager
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/laprus/spacelift-manager.git
+      targetRevision: HEAD
+      path: deployments/helm/spacelift-manager
+      ref: chart-source
+      helm:
+        valueFiles:
+          - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: spacelift-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
