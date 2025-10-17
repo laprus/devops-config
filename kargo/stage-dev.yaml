@@ -12,23 +12,62 @@ spec:
       direct: true
   promotionTemplate:
     spec:
+      vars:
+        - name: spaceliftStack
+          value: cin-devops-dev-sandbox-us-east-1
+        - name: configRepo
+          value: https://github.com/laprus/devops-config
+        - name: imageRepo
+          value: https://github.com/laprus/devops.git
+        - name: imageTag
+          value: ${{ imageFrom("ghcr.io/laprus/devops/devops-app").Tag }}
+        - name: imageCommitShaAnnotation
+          value: ${{ imageFrom("ghcr.io/laprus/devops/devops-app").Annotations["org.opencontainers.image.revision"] }}
       steps:
         - uses: git-clone
           config:
-            repoURL: https://github.com/laprus/devops-config
+            repoURL: ${{ vars.configRepo }}
             checkout:
               - branch: main
                 path: ./repo
+        - uses: http
+          continueOnError: false
+          config:
+            url: http://spacelift-manager.spacelift-manager:8000/apply
+            method: POST
+            body: |
+              ${{ quote(
+                { 
+                  "stack_id": vars.spaceliftStack, 
+                  "commit_sha": vars.imageCommitShaAnnotation
+                }
+              ) }}
+            timeout: 300s
+            headers:
+              - name: Content-Type
+                value: application/json
+            insecureSkipTLSVerify: true
+            failureExpression: response.status != 200 || response.body.finished == true && response.body.success == false
+            successExpression: response.status == 200 && response.body.finished == true && response.body.success == true
+            outputs:
+              - fromExpression: response.body.stack_id
+                name: stack_id
+              - fromExpression: response.body.run_id
+                name: run_id
+              - fromExpression: response.body.finished
+                name: finished
+              - fromExpression: response.body.success
+                name: success
         - uses: yaml-update
           config:
             path: ./repo/environments/dev/values.yaml
             updates:
               - key: image.tag
-                value: ${{ imageFrom("ghcr.io/laprus/devops/devops-app").Tag }}
+                value: ${{ vars.imageTag }}
         - uses: git-commit
           config:
             path: ./repo
-            message: "chore: promote devops-app to dev - ${{ imageFrom(\"ghcr.io/laprus/devops/devops-app\").Tag }}"
+            message: "chore: promote devops-app to dev - ${{ vars.imageTag }} - ${{ vars.imageCommitShaAnnotation }}"
         - uses: git-push
           config:
             path: ./repo
@@ -37,5 +76,5 @@ spec:
             apps:
               - name: devops-app-dev
                 sources:
-                - repoURL: "https://github.com/laprus/devops.git"
+                - repoURL: "${{ vars.imageRepo }}"
               

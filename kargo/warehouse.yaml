@@ -5,7 +5,7 @@ metadata:
   namespace: devops-kargo
 spec:
   freightCreationPolicy: Automatic
-  interval: 5m0s
+  interval: 1m0s
   subscriptions:
     - image:
         repoURL: ghcr.io/laprus/devops/devops-app
