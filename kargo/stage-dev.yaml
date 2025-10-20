@@ -78,3 +78,9 @@ spec:
                 sources:
                 - repoURL: "${{ vars.imageRepo }}"
               
+  verification:
+    analysisTemplates:
+    - name: devops-app-smoke-test
+    args:
+    - name: service-url
+      value: devops-app-dev.devops-dev:80

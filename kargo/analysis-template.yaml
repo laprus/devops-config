@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: devops-app-smoke-test
+  namespace: devops-kargo
+spec:
+  args:
+  - name: service-url
+  metrics:
+  - name: devops-app-smoke-test
+    interval: 5s
+    count: 5
+    successCondition: result != ''
+    failureLimit: 1
+    provider:
+      web:
+        url: http://{{args.service-url}}/version
+        method: GET
+        timeoutSeconds: 10
+        jsonPath: "{$.version}"
