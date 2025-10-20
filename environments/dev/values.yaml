@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/laprus/devops/devops-app
-  tag: v6.0.0
+  tag: v7.0.0
   
 
 replicaCount: 1
