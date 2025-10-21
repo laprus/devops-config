@@ -93,4 +93,4 @@ spec:
       - name: devops-app-smoke-test
     args:
       - name: service-url
-        value: devops-app-dev.devops-prod:80
+        value: devops-app-prod.devops-prod:80

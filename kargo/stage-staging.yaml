@@ -93,4 +93,5 @@ spec:
       - name: devops-app-smoke-test
     args:
       - name: service-url
-        value: devops-app-dev.devops-staging:80
+        value: devops-app-staging.devops-staging:80
+        
